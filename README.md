@@ -4,10 +4,10 @@ Need to download :
 
 Steps : 
 1- CLone the repo : https://github.com/tareq-abuaqlain/DB_project.git
-2- Type :  
+2- Type : cd ./DB_project
+3- Type :  
 dotnet restore
 dotnet build
-3- Delete these folders : obj , bin , .vs
-4- Go to folder Data in ContextDB.cs , change line 19 to your database connection 
-5- Type : dotnet run
-
+4- Delete these folders : obj , bin , .vs
+5- Go to folder Data in ContextDB.cs , change line 19 to your database connection 
+6- Type : dotnet run
