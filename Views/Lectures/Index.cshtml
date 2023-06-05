@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ProjectDB.Models.Lecture>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lectures</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.lecture_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    <a asp-controller="Attend" asp-action="Index" asp-route-lecture_id="@item.lecture_id" class="btn btn-primary">@item.lecture_id</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new { /* id=item.PrimaryKey */ })" class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Details", new { /* id=item.PrimaryKey */ })" class="btn btn-primary">Details</a>
+                <a href="@Url.Action("Delete", new { /* id=item.PrimaryKey */ })" class="btn btn-danger">Delete</a>
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

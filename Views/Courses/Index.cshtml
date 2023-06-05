@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ProjectDB.Models.Course>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Courses</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<form method="get" action="@Url.Action("Index")">
+    <div class="form-group">
+        <input type="text" name="searchString" placeholder="Search by department name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Reset</a>
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.course_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.credits)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.course_Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.department!.dept_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.credits)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { course_id = item.course_Id })" class="btn btn-primary">Edit</a> |
+                    <a href="@Url.Action("Delete", new { course_id = item.course_Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

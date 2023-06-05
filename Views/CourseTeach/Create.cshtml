@@ -1,0 +1,48 @@
+﻿@model ProjectDB.Models.CourseTeach
+
+@{
+    ViewData["Title"] = "Create";
+    SelectList? courseList =(SelectList) ViewData["courses"]!;
+
+    SelectList? instList = (SelectList) ViewData["instructors"]!;
+
+}
+
+<h4> Create New Course Teach</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="course" class="control-label"></label>
+                <select asp-items="courseList" name="course_id" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor" class="control-label"></label>
+                <select asp-items="instList" name="inst_id" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="topic" class="control-label"></label>
+                <input asp-for="topic" class="form-control" />
+                <span asp-validation-for="topic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="book" class="control-label"></label>
+                <input asp-for="book" class="form-control" />
+                <span asp-validation-for="book" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary my-2">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

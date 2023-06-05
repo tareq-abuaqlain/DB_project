@@ -1,0 +1,81 @@
+﻿@model ProjectDB.Models.ListAttend
+
+@{
+    ViewData["Title"] = "Create";
+    var lec = (Model.attends!.FirstOrDefault() as Attend)!.lecture;
+}
+
+
+<p>
+    attending students to lectuer @lec!.lecture_id from div @lec!.div!.div_id
+</p>
+      
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    std_id
+                </th>
+                <th>
+                    name
+                </th>
+                <th>
+                    isAttend
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @*@foreach (var item in Model) {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.student!.std_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.student!.name)
+                </td>
+                <td >
+                    <input hidden name="std_id" value="@item.student!.std_id"/>
+                    <input hidden name="lecture_id" value="@item.lecture!.lecture_id"/>
+                    @*<label asp-for="@Model.First().isAttend" class="control-label"></label>
+                    <input data-val="true" name="isAttend" type="checkbox" value="true" />
+                    <span asp-validation-for="@Model.First().isAttend" class="text-danger"></span>
+                </td>
+            </tr>
+    }*@
+
+            @using(Html.BeginForm("Create","Attend",FormMethod.Post))
+            {
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @foreach (Attend item in Model.attends!)
+                {
+                    <input hidden name="std_id" asp-for="@item.student!.std_id" value="@item.student!.std_id"/>
+                    <input hidden asp-for="@item.student" value="@item.student!.std_id"/>
+                    <input hidden name="lecture_id" asp-for="@item.lecture!.lecture_id" value="@item.lecture!.lecture_id"/>
+                    <input hidden  asp-for="@item.lecture" value="@item.lecture!.lecture_id"/>
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.student!.std_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.student!.name)
+                        </td>
+                        <td>
+                            <div class="checkbox">
+
+                                <input asp-for="@item.isAttend" type="checkbox"/> 
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <tr class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </tr>
+           }
+        </tbody>
+    </table>
+
+    

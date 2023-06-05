@@ -1,0 +1,33 @@
+﻿@model ProjectDB.Models.Registration
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h4>Create New User Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input hidden name="div_id" value="@Model.div!.div_id" class="form-control" />
+            <input hidden name="course_id" value="@Model.course!.course_Id" class="form-control" />
+            <div class="form-group">
+                <label asp-for="student" class="control-label"></label>
+                <input name="std_id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary my-2">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,65 @@
+﻿@model ProjectDB.Models.Div
+
+@{
+    ViewData["Title"] = "Create";
+    Course courseItem = (Course)ViewData["course"]!;
+
+    Instructor instItem = (Instructor)ViewData["instructor"]!;
+    SelectList? userList = (SelectList)ViewData["users"]!;
+    SelectList? typeList = (SelectList)ViewData["types"]!;
+}
+
+<h4>Add new Div</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input hidden name="course_id" value="@courseItem.course_Id" class="form-control" />
+            <input hidden name="inst_id" value="@instItem.inst_id" class="form-control" />
+            <div class="form-group">
+                <label asp-for="course" class="control-label"></label>
+                <input readonly value="@courseItem.title"  class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor" class="control-label"></label>
+                <input readonly value="@instItem.name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="user" class="control-label"></label>
+                <select name="user_id" asp-items="userList" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="room" class="control-label"></label>
+                <input asp-for="room" class="form-control" />
+                <span asp-validation-for="room" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="day" class="control-label"></label>
+                <input asp-for="day" class="form-control" />
+                <span asp-validation-for="day" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="time" class="control-label"></label>
+                <input type="time" asp-for="time" class="form-control" />
+                <span asp-validation-for="time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="type" class="control-label"></label>
+                <select asp-items="typeList" asp-for="type" class="form-control" ></select>
+                <span asp-validation-for="type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary my-2">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

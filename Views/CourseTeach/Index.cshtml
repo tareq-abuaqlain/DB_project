@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ProjectDB.Models.CourseTeach>
+
+@{
+    ViewData["Title"] = "Index";
+    var searchString = ViewData["SearchString"] as string; // Retrieve the searchString from ViewData
+
+}
+
+<h1>Course Teach</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Course Teach</a>
+</p>
+
+@if (!string.IsNullOrEmpty(searchString))
+{
+    <p>
+        <a asp-action="Index" class="btn btn-secondary">Reset Filter</a>
+    </p>
+}
+
+<form method="get" action="@Url.Action("Index")">
+    <div class="form-group">
+        <input type="text" name="searchString" placeholder="Search by course title" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Reset</a>
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.course)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.instructor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.topic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.book)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.course!.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.instructor!.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.topic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.book)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { course_id = item.course!.course_Id, inst_id = item.instructor!.inst_id })" class="btn btn-primary my-3">Edit</a> |
+                    <a href="@Url.Action("Delete", new { course_id = item.course!.course_Id, inst_id = item.instructor!.inst_id })" class="btn btn-danger my-3">Delete</a> |
+
+                    <p>
+                        <a asp-controller="Divs" asp-action="Create" asp-route-course_id="@item.course!.course_Id" asp-route-inst_id="@item.instructor!.inst_id" class="btn btn-primary my-3">New Div</a>
+                    </p>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

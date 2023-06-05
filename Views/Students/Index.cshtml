@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ProjectDB.Models.Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Students</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary btn-lg btn-block">Add Student</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.std_id)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.place)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.std_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.place)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new { std_id = item.std_id })" class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Delete", new { std_id = item.std_id })" class="btn btn-danger">Delete</a>
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

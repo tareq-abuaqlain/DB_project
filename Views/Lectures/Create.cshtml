@@ -1,0 +1,36 @@
+﻿@model ProjectDB.Models.Lecture
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Add New Lecture</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="div" class="control-label"></label>
+                <input readonly name="div_id" value="@Model.div!.div_id" class="form-control" />
+                <input hidden asp-for="div" value="@Model.div" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="title" class="control-label"></label>
+                <input asp-for="title" class="form-control" />
+                <span asp-validation-for="title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary my-2">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

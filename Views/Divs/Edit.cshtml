@@ -1,0 +1,71 @@
+﻿@model ProjectDB.Models.Div
+
+@{
+    ViewData["Title"] = "Edit";
+    SelectList? userList = (SelectList)ViewData["users"]!;
+}
+
+<h4>Edit tDiv</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input hidden asp-for="div_id" class="form-control" />
+            <input hidden name="course_id" value="@Model.course!.course_Id" class="form-control" />
+            <input hidden name="inst_id" value="@Model.instructor!.inst_id" class="form-control" />
+
+            <div class="form-group">
+                <label asp-for="div_id" class="control-label"></label>
+                <input readonly asp-for="div_id" class="form-control" />
+                <span asp-validation-for="div_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="course" class="control-label"></label>
+                <input readonly value="@Model.course!.title" class="form-control" />
+                <span asp-validation-for="course" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor" class="control-label"></label>
+                <input readonly value="@Model.instructor!.name" class="form-control" />
+                <span asp-validation-for="instructor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="user" class="control-label"></label>
+                <select name="user_id" asp-items="userList" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="room" class="control-label"></label>
+                <input asp-for="room" class="form-control" />
+                <span asp-validation-for="room" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="day" class="control-label"></label>
+                <input asp-for="day" class="form-control" />
+                <span asp-validation-for="day" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="time" class="control-label"></label>
+                <input type="time" asp-for="time" class="form-control" />
+                <span asp-validation-for="time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="type" class="control-label"></label>
+                <input readonly asp-for="type" class="form-control" />
+                <span asp-validation-for="type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary my-2">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

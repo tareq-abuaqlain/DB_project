@@ -1,0 +1,94 @@
+﻿@model IEnumerable<ProjectDB.Models.Div>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Divs</h1>
+
+<div>
+    <form method="get" action="@Url.Action("Index", "Divs")">
+        <div class="form-group">
+            <label for="searchString">Search:</label>
+            <input type="text" class="form-control" id="searchString" name="searchString" value="@ViewBag.CurrentFilter" />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a href="@Url.Action("Index", "Divs")" class="btn btn-secondary">Reset</a>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.div_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.course!.course_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.course!.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.instructor!.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user!.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.day)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Divs" asp-action="IndexStudentByDiv" asp-route-div_id="@item.div_id" class="btn btn-primary">@item.div_id</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.course!.course_Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.course!.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.instructor!.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user!.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.room)
+                </td>
+                <td>
+                    @{
+                        DayOfWeek day = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), item.day.ToString());
+                    }
+                    @Html.DisplayFor(modelItem => day)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.type)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { div_id = item.div_id })" class="btn btn-primary">Edit</a> |
+                    <a href="@Url.Action("Delete", new { div_id = item.div_id })" class="btn btn-danger">Delete</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

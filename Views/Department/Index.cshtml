@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ProjectDB.Models.Department>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Department</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Department</a>
+</p>
+
+<form method="get" action="@Url.Action("Index")">
+    <div class="form-group">
+        <input type="text" name="search" placeholder="Search by department name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Reset</a>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dept_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.building)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.budget)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dept_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.building)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.budget)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { dept_name = item.dept_name })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", new { dept_name = item.dept_name })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

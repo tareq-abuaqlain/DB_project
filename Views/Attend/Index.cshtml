@@ -1,0 +1,87 @@
+﻿@model ProjectDB.Models.ListAttend
+
+@{
+    ViewData["Title"] = "Index";
+    List<Student>? students = ViewData["students"] as List<Student>;
+    List<Attend>? list = Model.attends;
+    List<Attend>? attends = list!.Where(c => c.isAttend == true).ToList();
+    double per = ((double)attends!.Count() / students!.Count()) * 100;
+    List<string?>? inValid = ViewData["inValid"] as List<string?>;
+}
+
+<h1>Index</h1>
+
+<form asp-action="AddExcel" method="post" enctype="multipart/form-data">
+    <input hidden name="lecture_id" value="@ViewData["lec_id"]" />
+    <input type="file" name="file" />
+    <div class="form-group">
+        <input type="submit" value="Add File" class="btn btn-primary" />
+    </div>
+
+</form>
+@if (inValid != null)
+{
+    @foreach (var item in inValid)
+    {
+        <ul>
+            <li>
+                @item
+            </li>
+        </ul>
+    }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            @if(attends == null || students ==null){
+                <th>students   0 / 0</th>
+            }
+            else if(attends == null){
+                <th>students   0 / @students!.Count()   (0 %)</th>
+            }
+            else{
+                <th>students   @attends!.Count() / @students!.Count()    (@per %)</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in students!) {
+            var item = Model.attends!.FirstOrDefault(x => x.student!.std_id == student.std_id);
+            
+            <tr>
+                @if (item != null)
+                {
+                    @if (item.isAttend)
+                    {
+                        <td >
+                            <a style="min-width:150px" class="btn btn-success"> @item.student!.std_id - @item.student!.name </a>
+                        </td>
+                        <td >
+                            <a style="min-width:150px" class="btn btn-outline-danger" asp-controller="Attend" asp-action="Create" asp-route-std_id="@item.student!.std_id" asp-route-lecture_id="@item.lecture!.lecture_id" asp-route-isAttend="false"> @item.student!.std_id - @item.student!.name </a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td >
+                            <a style="min-width:150px" class="btn btn-outline-success" asp-controller="Attend" asp-action="Create" asp-route-std_id="@item.student!.std_id" asp-route-lecture_id="@item.lecture!.lecture_id" asp-route-isAttend="true"> @item.student!.std_id - @item.student!.name </a>
+                        </td>
+                        <td >
+                            <a style="min-width:150px" class="btn btn-danger"> @item.student!.std_id - @item.student!.name </a>
+                        </td>
+                    }
+                }
+                else
+                {
+                    <td>
+                        <a style="min-width:150px" class="btn btn-outline-success" asp-controller="Attend" asp-action="Create" asp-route-std_id="@student!.std_id" asp-route-lecture_id="@ViewData["lec_id"]" asp-route-isAttend="true"> @student!.std_id - @student!.name </a>
+                    </td>
+                    <td>
+                        <a style="min-width:150px" class="btn btn-outline-danger" asp-controller="Attend" asp-action="Create" asp-route-std_id="@student!.std_id" asp-route-lecture_id="@ViewData["lec_id"]" asp-route-isAttend="false"> @student!.std_id - @student!.name </a>
+                    </td>
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>

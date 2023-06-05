@@ -1,0 +1,92 @@
+﻿@model IEnumerable<ProjectDB.Models.User>
+
+@{
+    ViewData["Title"] = "Index";
+    List<Role>? Allroles = null;
+    if (ViewData["roles"] != null)
+        Allroles = ViewData["roles"] as List<Role>;
+    List<UserRole>? userRoles = null;
+    if (ViewData["userRoles"] != null)
+        userRoles = ViewData["userRoles"] as List<UserRole>;
+}
+
+<h1>Users</h1>
+
+<form method="get" action="@Url.Action("Index")">
+    <div class="form-group">
+        <input type="text" name="searchString" placeholder="Search by username" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Reset</a>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New User</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.user_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.identity)
+            </th>
+            <th>
+                Type User
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.username)
+                </td>
+                <td>
+                    @{
+                        var date = item.date.ToShortDateString();
+                    }
+                    @Html.DisplayFor(modelItem => date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.identity)
+                </td>
+                <td>
+                    @{
+                        List<int> rolesForUser = userRoles!.Where(x => x.user_id == item.user_id).Select(x => x.role_id).ToList();
+                        List<Role> roles = Allroles!.Where(x => rolesForUser.Contains(x.role_id)).ToList();
+                    }
+                    <ul>
+                        @foreach (var role in roles)
+                        {
+                            <li>@role.name</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a asp-controller="Users" asp-action="Edit" asp-route-user_id="@item.user_id" class="btn btn-primary"> Edit</a> |
+                    <a asp-controller="Users" asp-action="Delete" asp-route-user_id="@item.user_id" class="btn btn-danger"> Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
