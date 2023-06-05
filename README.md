@@ -1,9 +1,9 @@
 Need to download : 
 1- git & git bash
-2- ASP.NET V7 : here
+2- ASP.NET V7 : https://dotnet.microsoft.com/en-us/download
 
 Steps : 
-1- CLone the repo : here
+1- CLone the repo : https://github.com/tareq-abuaqlain/DB_project.git
 2- Type :  
 dotnet restore
 dotnet build
